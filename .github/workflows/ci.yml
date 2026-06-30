@@ -1,0 +1,35 @@
+name: validate-skill
+
+# Exercises a clean checkout on a non-author machine — the environment that
+# catches reintroduced hardcoded paths or missing files. All checks are
+# dependency-free (no PyYAML / no network).
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.9", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Validate skill (self-contained)
+        run: python3 quick_validate.py
+      - name: Validator unit tests
+        run: python3 scripts/validate_skill.py system-wright && python3 scripts/test_validate_skill.py
+      - name: Skill quality / completeness lint
+        run: python3 tests/check_skill_quality.py
+      - name: Byte-compile + whitespace
+        run: |
+          python3 -m py_compile scripts/validate_skill.py scripts/test_validate_skill.py tests/check_skill_quality.py quick_validate.py
+          git diff --check
+      - name: Installer smoke test (custom dir, no host writes)
+        run: |
+          sh scripts/install.sh --dir "$RUNNER_TEMP/skills"
+          test -f "$RUNNER_TEMP/skills/system-wright/SKILL.md"

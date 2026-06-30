@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SystemWright — design the AI work system, not just the prompt</title>
+<meta name="description" content="A cross-platform Agent Skill (Claude Code, Codex, Gemini, Cursor) that turns a vague goal into a reusable AI work system: Prompt, Context, Harness, Loop.">
+<meta property="og:title" content="SystemWright">
+<meta property="og:description" content="Stop writing better prompts. Design the system that runs them.">
+<meta property="og:type" content="website">
+<style>
+  :root{
+    --bg:#0c0c11; --panel:#15151d; --line:#26262f; --ink:#ececf1;
+    --muted:#9a9aa7; --accent:#8b7bf0; --accent2:#5ee0c0; --code:#0f0f15;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Hiragino Sans GB",sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--accent); text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:860px; margin:0 auto; padding:0 22px}
+  code,pre{font-family:"SF Mono",ui-monospace,"JetBrains Mono",Menlo,Consolas,monospace}
+
+  header{padding:74px 0 30px; border-bottom:1px solid var(--line)}
+  .kicker{color:var(--accent2); font-size:13px; letter-spacing:.14em; text-transform:uppercase; font-weight:600; margin:0 0 14px}
+  h1{font-size:clamp(34px,6vw,56px); line-height:1.06; margin:0 0 18px; letter-spacing:-.02em}
+  h1 .grad{background:linear-gradient(92deg,var(--accent),var(--accent2)); -webkit-background-clip:text; background-clip:text; color:transparent}
+  .lead{font-size:19px; color:var(--muted); max-width:62ch; margin:0 0 26px}
+  .cta{display:flex; gap:12px; flex-wrap:wrap; align-items:center}
+  .btn{display:inline-block; padding:11px 18px; border-radius:10px; font-weight:600; font-size:15px}
+  .btn.primary{background:var(--accent); color:#0c0c11}
+  .btn.ghost{border:1px solid var(--line); color:var(--ink)}
+  .hosts{margin-top:22px; color:var(--muted); font-size:14px}
+  .hosts b{color:var(--ink); font-weight:600}
+
+  section{padding:54px 0; border-bottom:1px solid var(--line)}
+  h2{font-size:13px; letter-spacing:.14em; text-transform:uppercase; color:var(--accent2); font-weight:600; margin:0 0 22px}
+  h3{font-size:21px; margin:0 0 10px; letter-spacing:-.01em}
+  p{color:#cfcfd8}
+
+  pre{background:var(--code); border:1px solid var(--line); border-radius:12px; padding:18px 20px; overflow:auto; font-size:13.5px; line-height:1.6; color:#d7d7e0}
+  .demo .col{margin:0 0 16px}
+  .tag{display:inline-block; font-size:12px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; padding:3px 9px; border-radius:999px; margin-bottom:8px}
+  .tag.in{background:rgba(139,123,240,.16); color:var(--accent)}
+  .tag.out{background:rgba(94,224,192,.14); color:var(--accent2)}
+
+  .grid{display:grid; grid-template-columns:1fr 1fr; gap:14px}
+  @media(max-width:620px){.grid{grid-template-columns:1fr}}
+  .card{background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:18px 20px}
+  .card .l{font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); font-weight:700}
+  .card h3{font-size:18px; margin:6px 0 6px}
+  .card p{margin:0; font-size:14.5px; color:var(--muted)}
+
+  footer{padding:40px 0 70px; color:var(--muted); font-size:14px}
+  footer a{color:var(--muted); text-decoration:underline}
+  .note{color:var(--muted); font-size:14px}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <p class="kicker">Agent Skill · open SKILL.md standard</p>
+    <h1>Stop writing better prompts.<br><span class="grad">Design the system that runs them.</span></h1>
+    <p class="lead">SystemWright is a cross-platform Agent Skill that turns a vague goal into a reusable <b>AI work system</b> — built from four layers: <b>Prompt · Context · Harness · Loop</b>. The skill itself is the product; MCPs, orchestrators and automations are outputs it designs only when the job needs them.</p>
+    <div class="cta">
+      <a class="btn primary" href="https://github.com/EthanQC/SystemWright">View on GitHub →</a>
+      <a class="btn ghost" href="#install">Install</a>
+      <a class="btn ghost" href="https://github.com/EthanQC/SystemWright/blob/main/README.zh-CN.md">中文说明</a>
+    </div>
+    <p class="hosts">Runs on <b>Claude Code</b> · <b>Codex CLI</b> · <b>Gemini CLI</b> · <b>Cursor</b> — and Claude-compatible backends like Kimi &amp; GLM.</p>
+  </div>
+</header>
+
+<section class="demo">
+  <div class="wrap">
+    <h2>See it in 30 seconds</h2>
+    <div class="col">
+      <span class="tag in">You give it — raw, messy</span>
+<pre>· 28 leads this week (+6), but only 3 reached a quote
+· Customer B needs a delivery date confirmed by Friday
+· "optimize the review flow" was decided — but nobody owns it
+· support hit the same question 5× this week
+"help me run my company with AI"</pre>
+    </div>
+    <div class="col">
+      <span class="tag out">It returns — a runnable loop, not a platform</span>
+<pre>facts ≠ opinions · 2 concrete decisions · human-approval gates · next-week checks
+→ Decision 1: assign an owner for the review flow today; minimal plan by Thursday.
+→ Decision 2: give Customer B a firm date by tomorrow noon — don't let it slip.
+→ Action: send 2 messages in the next 10 minutes; write 5 facts, not a report.</pre>
+    </div>
+    <p class="note">No platform built. No tool forced. Just the smallest durable system that moves the real goal forward — with you still deciding what matters.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Four layers, not one prompt</h2>
+    <div class="grid">
+      <div class="card"><span class="l">Prompt</span><h3>Say it clearly</h3><p>Role, task, constraints, output format, and the decisions the AI may make alone vs. must escalate.</p></div>
+      <div class="card"><span class="l">Context</span><h3>Give the right facts</h3><p>The minimal high-signal set: files, examples, rules, memory, and a single source of truth.</p></div>
+      <div class="card"><span class="l">Harness</span><h3>Bound the action</h3><p>Tools, permissions, sandbox, verification commands, and what stays read-only.</p></div>
+      <div class="card"><span class="l">Loop</span><h3>Make it improve</h3><p>Trigger, review cadence, memory, stop conditions — and the forbidden means that stop it gaming its own check.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="install">
+  <div class="wrap">
+    <h2>Install in one line</h2>
+    <p>It's a plain <code>SKILL.md</code> directory — installation is copying it into your host's skills folder. The bundled installer does it portably:</p>
+<pre># pick your host: claude | codex | gemini | cursor
+git clone https://github.com/EthanQC/SystemWright &amp;&amp; cd SystemWright
+sh scripts/install.sh --host claude</pre>
+    <p class="note">Then just describe a recurring goal in your agent. Full per-host table and Kimi/GLM setup in the <a href="https://github.com/EthanQC/SystemWright#installation">README</a>.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <a href="https://github.com/EthanQC/SystemWright">GitHub</a> ·
+    <a href="https://github.com/EthanQC/SystemWright/blob/main/README.md">Docs</a> ·
+    <a href="https://github.com/EthanQC/SystemWright/blob/main/LICENSE">MIT License</a>
+    <p style="margin-top:14px">Built by EthanQC. Free &amp; open source.</p>
+  </div>
+</footer>
+</body>
+</html>

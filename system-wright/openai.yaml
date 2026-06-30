@@ -1,0 +1,4 @@
+interface:
+  display_name: "SystemWright"
+  short_description: "Turn vague goals into executable AI work systems"
+  default_prompt: "Use $system-wright to turn my vague goal into an executable AI work system."
