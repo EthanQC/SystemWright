@@ -8,8 +8,8 @@
   <rect width="1200" height="630" fill="#0c0c11"/>
   <rect x="0" y="0" width="1200" height="6" fill="url(#grad)"/>
   <text x="80" y="150" fill="#5ee0c0" font-size="26" font-weight="600" letter-spacing="4">AGENT SKILL · OPEN SKILL.md STANDARD</text>
-  <text x="78" y="270" fill="#ececf1" font-size="82" font-weight="800" letter-spacing="-2">Stop writing better prompts.</text>
-  <text x="78" y="370" fill="url(#grad)" font-size="82" font-weight="800" letter-spacing="-2">Design the system that runs them.</text>
+  <text x="80" y="272" fill="#ececf1" font-size="70" font-weight="800" letter-spacing="-2" textLength="1040" lengthAdjust="spacingAndGlyphs">Stop writing better prompts.</text>
+  <text x="80" y="366" fill="url(#grad)" font-size="70" font-weight="800" letter-spacing="-2" textLength="1040" lengthAdjust="spacingAndGlyphs">Design the system that runs them.</text>
   <text x="80" y="470" fill="#9a9aa7" font-size="34" font-weight="400">A vague goal → a reusable AI work system:</text>
   <text x="80" y="520" fill="#cfcfd8" font-size="34" font-weight="700">Prompt · Context · Harness · Loop</text>
   <text x="80" y="590" fill="#9a9aa7" font-size="26">Claude Code · Codex · Gemini · Cursor    ·    github.com/EthanQC/SystemWright</text>

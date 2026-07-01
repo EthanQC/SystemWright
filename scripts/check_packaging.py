@@ -17,6 +17,7 @@ Run: python3 scripts/check_packaging.py  -> exits 0 (ok) or 1 (issues).
 from __future__ import annotations
 
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -118,9 +119,11 @@ def check_landing(failures: list[str]) -> None:
     require(bool(html.strip()), "docs/index.html must not be empty", failures)
     require("<title>" in html, "docs/index.html must have a <title>", failures)
     require('rel="canonical"' in html, "docs/index.html must set a canonical link", failures)
-    # If an og:image is declared as a repo-relative asset, that asset must exist.
-    if "og-card.svg" in html:
-        require((LANDING.parent / "og-card.svg").is_file(), "docs/og-card.svg referenced but missing", failures)
+    # The og:image, if a repo-relative asset, must actually exist on disk.
+    m = re.search(r'property="og:image"\s+content="[^"]*/([^"/]+)"', html)
+    if m:
+        asset = m.group(1)
+        require((LANDING.parent / asset).is_file(), f"docs/{asset} (og:image) is referenced but missing", failures)
 
 
 def main() -> int:

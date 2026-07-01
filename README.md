@@ -14,6 +14,8 @@ It runs anywhere the Agent Skills standard is supported — Claude Code, OpenAI 
 
 ## See it in 30 seconds
 
+![Illustrative walkthrough: a vague, messy goal in — a runnable weekly loop out](docs/demo.png)
+
 A founder pastes five messy facts from their week and says "help me run my company with AI." Instead of building a platform, SystemWright returns a **first weekly loop you can run by hand today**:
 
 ```text
