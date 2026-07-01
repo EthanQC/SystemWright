@@ -15,14 +15,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
-from validate_skill import read_frontmatter, validate_skill  # noqa: E402
-
-
-def find_skill_dir(root: Path) -> Path:
-    candidates = [p for p in sorted(root.iterdir()) if (p / "SKILL.md").is_file()]
-    if len(candidates) != 1:
-        raise SystemExit(f"expected exactly one skill dir with SKILL.md, found: {[p.name for p in candidates]}")
-    return candidates[0]
+from validate_skill import find_skill_dir, read_frontmatter, validate_skill  # noqa: E402
 
 
 SKILL = find_skill_dir(ROOT)
@@ -252,43 +245,73 @@ def check_test_outputs(failures: list[str]) -> None:
     check_negative_triggers(failures)
 
 
-def check_readme(failures: list[str]) -> None:
-    text = read(ROOT / "README.md")
-    require_contains(
-        text,
-        ["## Installation", "## Usage", "## Validation", "## Test Outputs", "## License"],
-        "README.md sections",
-        failures,
-    )
-    # Cross-platform: must document at least two hosts and the portable invocation.
+# Every shipped run + the negative file must be listed in BOTH READMEs (bare
+# filenames so the EN "test-output/…" paths and the zh-CN bare names both match).
+TEST_OUTPUT_FILES = [
+    "actual-test-messy-ai-article-loop.md",
+    "actual-test-xhs-ops-system.md",
+    "actual-test-founder-level-idea.md",
+    "actual-test-saas-support.md",
+    "negative-trigger-tests.md",
+]
+
+
+def check_one_readme(path: Path, sections: list[str], label: str, failures: list[str]) -> None:
+    if not path.exists():
+        require(False, f"{label} must exist", failures)
+        return
+    text = read(path)
+    require_contains(text, sections, f"{label} sections", failures)
+    # Cross-platform: must document hosts and the portable invocation.
     require_contains(
         text,
         [".claude/skills", ".codex/skills", "$system-wright", "scripts/install.sh"],
-        "README.md cross-platform install",
+        f"{label} cross-platform install",
         failures,
     )
-    require_contains(
-        text,
-        [
-            "test-output/actual-test-messy-ai-article-loop.md",
-            "test-output/actual-test-xhs-ops-system.md",
-            "test-output/actual-test-founder-level-idea.md",
-            "test-output/negative-trigger-tests.md",
-        ],
-        "README.md test-output list",
+    require_contains(text, TEST_OUTPUT_FILES, f"{label} test-output list", failures)
+
+
+def check_readme(failures: list[str]) -> None:
+    # Guard EN and zh-CN together so the bilingual pair cannot silently diverge.
+    check_one_readme(
+        ROOT / "README.md",
+        ["## Installation", "## Usage", "## Validation", "## Test Outputs", "## License"],
+        "README.md",
+        failures,
+    )
+    check_one_readme(
+        ROOT / "README.zh-CN.md",
+        ["## 安装", "## 怎么用", "## 校验", "## 设计走查记录", "## 许可"],
+        "README.zh-CN.md",
         failures,
     )
 
 
 def check_license(failures: list[str]) -> None:
-    require((ROOT / "LICENSE").exists() or (ROOT / "LICENSE.md").exists(), "a LICENSE file must exist", failures)
+    lic = ROOT / "LICENSE" if (ROOT / "LICENSE").exists() else ROOT / "LICENSE.md"
+    require(lic.exists(), "a LICENSE file must exist", failures)
+    if lic.exists():
+        # Body must actually be the MIT text the frontmatter + manifests all claim.
+        require("MIT License" in read(lic), "LICENSE body must contain the MIT License text", failures)
 
 
 def check_portability(failures: list[str]) -> None:
-    # No user-home / machine-specific absolute paths in shipped docs or scripts.
-    targets = [ROOT / "README.md", ROOT / "quick_validate.py"]
+    # No user-home / machine-specific absolute paths in ANY shipped file — including
+    # the skill content install.sh copies onto user machines, both READMEs, the
+    # landing page, and the recorded runs (not just the validators).
+    targets = [
+        ROOT / "README.md",
+        ROOT / "README.zh-CN.md",
+        ROOT / "quick_validate.py",
+        SKILL / "SKILL.md",
+        ROOT / "docs" / "index.html",
+    ]
+    targets += sorted(REFERENCES.glob("*.md"))
     targets += sorted((ROOT / "scripts").glob("*.py"))
     targets += sorted((ROOT / "scripts").glob("*.sh"))
+    targets += sorted((ROOT / "tests").glob("*.py"))
+    targets += sorted(TEST_OUTPUT.glob("*.md"))
     needle = "/" + "Users/"  # built at runtime so this guard file doesn't match itself
     for path in targets:
         if path.exists():
