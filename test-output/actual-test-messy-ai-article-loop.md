@@ -90,6 +90,11 @@ Harness layer:
 Loop layer:
 每篇文章处理一次；每 5 篇复盘主题；反馈标记为执行、放弃、待查证；经过真实执行的规则才进入长期记忆。
 
+Verification ladder（先便宜后贵）：确定性（是否含一个 30 分钟内可做的动作、是否标注 hype）> 规则（与当前目标的相关性）> 人（是否相信观点、是否沉淀规则）。
+Permission tier（逐动作）：读粘贴内容 = read-only；生成动作/候选规则 = draft；写入笔记软件/发布内容 = real-world，必须人工审批，v1 不做。
+Loop types：agent（转化）+ verification（相关性与 hype 过滤）；每 5 篇一次轻量 hill-climbing。maker ≠ checker：转化与过滤分离。
+Observability（每次运行记录）：运行时刻、输入文章、产出动作、失败步、重试、成本、最终证据。
+
 Human judgment gates:
 是否相信观点、是否执行动作、是否公开发布、是否保存为规则。
 
@@ -175,6 +180,8 @@ Draft one XHS post outline explaining why “automate everything” is the wrong
 Pass only if the output has a concrete action, rejects or qualifies hype, names what the human approves, and says what to save.
 
 ## Trial Run
+
+Trial mode: design-consistency（自演验证）。真实实测应用 20 篇真实文章回放，看每篇是否产出可执行动作与可验证候选规则。
 
 First output:
 The messy excerpt is useful for one rule: do not start with connecting every tool; start by proving one feedback loop works. Concrete action: write a 7-card XHS outline on “为什么不是先接 MCP，而是先跑一个 Loop”. Candidate rule: tool access comes after repeated manual runs prove the context and review rules.

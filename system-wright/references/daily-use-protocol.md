@@ -4,23 +4,9 @@ Use this reference when the user needs a copyable way to run the designed work s
 
 ## Plain-Language Output
 
-Before technical labels, give the user this shape:
-
-```text
-What this helps with:
-
-What you give it:
-
-What the AI does:
-
-What you still decide:
-
-How to check it worked:
-
-What gets saved for next time:
-
-First task:
-```
+Before technical labels, give the user the plain-language brief shape — the seven fields defined once in
+`design-playbook.md` (Plain-Language Brief Template): what this helps with, what you give it, what the AI
+does, what you still decide, how to check it worked, what gets saved for next time, and the first task.
 
 ## Daily-Use Protocol
 

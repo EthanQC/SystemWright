@@ -83,6 +83,11 @@ Harness layer:
 Loop layer:
 每条内容经历 idea -> draft -> review -> revise -> approve -> publish manually -> retrospective -> memory update。每周复盘一次有效规则和误判规则。
 
+Verification ladder（先便宜后贵）：确定性（禁用词命中、事实字段齐全、发布前 checklist 完整）> 规则（品牌一致性、平台风险词）> 多模型/人（审美与风险接受）。
+Permission tier（逐动作）：读 specs/样例/历史 = read-only；生成草稿 = draft；发布/私信/写回数据 = real-world，必须人工审批，v1 不做。
+Loop types：agent（生成）+ verification（审核回退）；稳定后可加 event-driven（新选题触发）。maker ≠ checker：生成与审核分离。
+Observability（每次运行记录）：运行时刻、输入选题、动作、失败步、重试次数、成本、最终证据（草稿与 checklist）。
+
 Human judgment gates:
 选题是否值得做、文案是否符合账号气质、风险是否可接受、是否发布、哪些经验进入长期规范。
 
@@ -174,6 +179,8 @@ Run one manual content loop for the topic: “为什么不是先接 MCP，而是
 Pass only if the output includes a draft, risk review, human approval gate, and memory update candidate without automatic publishing.
 
 ## Trial Run
+
+Trial mode: design-consistency（自演设计自洽验证，非真实数据实测）。真实实测应回放 10 条历史内容，测审核一致率、零编造事实、零漏风险。
 
 Actual run output:
 

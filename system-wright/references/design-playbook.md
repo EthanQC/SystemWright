@@ -207,11 +207,9 @@ Approval gate:
 Fallback without MCP:
 ```
 
-Primitive fit:
-
-- tool: the model may call an external action such as API lookup, database query, computation, or write operation.
-- resource: the system needs app data, files, schemas, records, or other context selected by the host application.
-- prompt: the external system should expose a reusable user-invoked workflow template.
+Primitive fit: pick the smallest primitive using the tool / resource / prompt definitions in
+`four-layer-framework.md` — tool = model-controlled action, resource = application-driven context,
+prompt = user-controlled template.
 
 ### Orchestrator Type Decision Format
 

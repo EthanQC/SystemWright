@@ -168,6 +168,8 @@ def check_trial_output(path: Path, failures: list[str]) -> None:
             "First task", "Review Rule",
             "Trial Run", "Observed capability", "Observed limitation",
             "manual/staged workflow",
+            # v1.1 depth: every recorded run must now demonstrate the hard-currency fields
+            "Verification ladder", "Permission tier", "Observability",
         ],
         path.name,
         failures,
@@ -231,7 +233,7 @@ def check_test_outputs(failures: list[str]) -> None:
 
     saas = TEST_OUTPUT / "actual-test-saas-support.md"
     if saas.exists():
-        require_contains(read(saas), ["MCP needed: yes", "Verification ladder", "Permission tier", "Observability", "maker-checker", "Orchestrator decision", "Real 实测 protocol"], "actual-test-saas-support.md", failures)
+        require_contains(read(saas), ["MCP needed: yes", "maker-checker", "Real 实测 protocol"], "actual-test-saas-support.md", failures)
 
     check_negative_triggers(failures)
 

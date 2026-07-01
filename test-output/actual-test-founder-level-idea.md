@@ -83,6 +83,11 @@ Harness layer:
 Loop layer:
 每周输入事实 -> AI 整理 -> founder 决策 -> 下周检查执行 -> 记录误判和规则。每月复盘管理规则是否有效。
 
+Verification ladder（先便宜后贵）：确定性（事实有来源、决策具体、责任人可确认）> 规则（事实与观点分离）> 人（优先级与对外承诺）。
+Permission tier（逐动作）：读周报/指标 = read-only；生成复盘草案 = draft；下达任务/对外承诺/员工评价 = real-world，必须 founder 审批，v1 不做。
+Loop types：event-driven（每周触发）+ verification（决策前挑战）+ hill-climbing（每月复盘误判改规则）。maker ≠ checker：整理与挑战分离。
+Observability（每次运行记录）：运行时刻、输入事实、产出决策、失败步、重试、成本、最终证据。
+
 Human judgment gates:
 优先级、资源分配、人员评价、对外承诺、是否升级为系统集成。
 
@@ -171,6 +176,8 @@ Run one weekly review using only manually pasted facts from the current week.
 Pass only if the output separates facts from opinions, gives 1-3 decisions, names approval gates, and defines next-week checks.
 
 ## Trial Run
+
+Trial mode: design-consistency（自演验证，非真实数据实测）。真实实测应连续 4 周用真实周报回放，看决策是否可执行、最承重假设是否被默认。
 
 Weekly facts:
 - 本周销售线索 28 个，比上周多 6 个，但只有 3 个进入报价。
