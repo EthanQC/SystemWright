@@ -17,7 +17,7 @@ Loop:
 How the work improves over time. Loop includes repeated execution, checks, feedback, review, memory, metrics, and next-round updates.
 
 Human judgment:
-What the human must decide because it involves taste, risk, priority, ethics, brand, tradeoffs, or business intent.
+What the human must decide because it involves taste, risk, priority, ethics, brand, tradeoffs, or business intent. Guard two human risks: comprehension debt (the system runs so fast the person stops understanding the current result) and cognitive surrender (the person hands over judgment and only presses start). Counter both by making every output carry its evidence and open questions, not just a clean answer.
 
 ## The Key Distinction
 
@@ -142,3 +142,50 @@ Loop layer:
 - What gets written back into memory or templates?
 - What must the loop never do to hit its target (forbidden means)?
 - When does the loop stop, escalate, or redesign itself?
+
+## Verification Ladder
+
+Completion means checkable evidence, not the agent's own claim that it is done. Choose the cheapest
+sufficient check, in this order, and only climb when the cheaper one cannot cover the case:
+
+- deterministic: tests pass, a file exists, a number reconciles, a link opens, a field is filled.
+- rule: banned-phrase checks, format/schema checks, a keyword forcing a label.
+- multi-model / LLM judge: a separate model scores output against a rubric.
+- human: taste, risk, ethics, money, legal, brand.
+
+Ask "what evidence proves it is done?", not "do you think it's done?".
+
+## Maker-Checker
+
+The agent that produces work should not be the only one that judges it. Split the maker from the checker
+— a second agent, a rule system, or a human on risk. This is normal quality control, not distrust.
+
+## Permission Tiers
+
+Put every action on a tier, and keep the last tier behind human approval:
+
+- read-only: look, summarize, suggest.
+- draft: write something that is not sent.
+- local-write: change local files, with review.
+- external-tool: call an external tool, open a PR, change a task's state.
+- real-world: pay, send, publish, delete, or change production — always human-approved.
+
+The minimal first version must not act above the tier the user has approved.
+
+## The Four Loop Types
+
+Name which of these a designed loop uses, so the design is explicit rather than one vague "loop":
+
+- agent loop: take context, call tools, observe, continue until done or stuck (does the work).
+- verification loop: a checker scores the result and sends failures back to be redone (gets it right).
+- event-driven loop: the system starts on a trigger — schedule, new message, webhook, alarm (scale and initiative).
+- hill-climbing loop: analyze past runs and traces to improve prompt, tools, verifier, memory, or rules (gets better over time).
+
+Stop conditions are a menu, not an afterthought: tests all pass, a score threshold, no new input, a max
+retry count, a human-judgment point reached, or a cost/time budget exhausted.
+
+## Observability Minimum
+
+A loop you cannot observe is a loop you cannot trust. Each run should record: when it ran, what inputs it
+read, what actions it took, why it judged as it did, which step failed, how many retries, the cost, and
+the final evidence.

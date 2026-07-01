@@ -151,15 +151,22 @@ Harness layer:
 - Runtime:
 - Tools:
 - Permissions:
+- Permission tier (per action: read-only / draft / local-write / external-tool / real-world):
 - Guardrails:
-- Verification:
+- Verification ladder (cheapest sufficient first: deterministic > rule > multi-model > human):
 
 Loop layer:
 - Cycle:
+- Loop types used (agent / verification / event-driven / hill-climbing):
 - Review cadence:
 - Feedback capture:
 - Memory update:
 - Next action:
+- Stop condition:
+- Escalation:
+- Budget / limits (max retries, cost/time ceiling):
+- Observability (run time, inputs, actions, failed step, retries, cost, final evidence):
+- Economic / cost (model tiering, caching, per-run cost):
 - Forbidden means (what the system must never do to satisfy its own completion check):
 
 Human judgment gates:
@@ -174,6 +181,13 @@ Minimal first version:
 
 Expansion path:
 ```
+
+### Grounding artifacts
+
+When the design's quality depends on a context artifact the user has to write — a belief ledger, brand
+rules, an examples file, a grounding doc — do not hand over an empty template. Deliver (a) one good
+filled example, (b) one bad example that shows the common failure, and (c) a guided way to extract it
+from material the user already has. An empty template is the top reason a good design never gets adopted.
 
 ### MCP Primitive Decision Format
 

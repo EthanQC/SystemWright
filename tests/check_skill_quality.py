@@ -111,7 +111,8 @@ def check_references(failures: list[str]) -> None:
 
     require_contains(
         read(REFERENCES / "design-playbook.md"),
-        ["Beginner Default Questions", "Plain-Language Brief Template", "MCP Primitive Decision Format", "Orchestrator Type Decision Format", "Forbidden means"],
+        ["Beginner Default Questions", "Plain-Language Brief Template", "MCP Primitive Decision Format", "Orchestrator Type Decision Format", "Forbidden means",
+         "Permission tier", "Verification ladder", "Stop condition:", "Observability", "Grounding artifacts"],
         "design-playbook.md",
         failures,
     )
@@ -119,8 +120,18 @@ def check_references(failures: list[str]) -> None:
 
     require_contains(
         read(REFERENCES / "four-layer-framework.md"),
-        ["MCP primitive", "tool/resource/prompt", "control model", "manual/staged workflow / subagent / application orchestrator", "forbidden means"],
+        ["MCP primitive", "tool/resource/prompt", "control model", "manual/staged workflow / subagent / application orchestrator", "forbidden means",
+         "Verification Ladder", "Permission Tiers", "Maker-Checker", "hill-climbing loop", "Observability"],
         "four-layer-framework.md",
+        failures,
+    )
+
+    require_contains(
+        read(REFERENCES / "failure-modes.md"),
+        ["Runtime Failure Modes", "Goal failure", "Context failure", "Tool failure", "Verification failure",
+         "Loop-control failure", "Memory failure", "Human-collaboration failure", "Economic failure",
+         "verification ladder", "comprehension debt", "cognitive surrender"],
+        "failure-modes.md",
         failures,
     )
 
@@ -133,7 +144,7 @@ def check_references(failures: list[str]) -> None:
 
     require_contains(
         read(REFERENCES / "test-scenarios.md"),
-        ["Should Trigger", "Should Not Trigger", "copyable starting prompt", "non-technical user", "negative examples"],
+        ["Should Trigger", "Should Not Trigger", "copyable starting prompt", "non-technical user", "negative examples", "SaaS Support Triage", "MCP = yes"],
         "test-scenarios.md",
         failures,
     )
@@ -217,6 +228,10 @@ def check_test_outputs(failures: list[str]) -> None:
     founder = TEST_OUTPUT / "actual-test-founder-level-idea.md"
     if founder.exists():
         require_contains(read(founder), ["Actual run output", "Weekly facts:", "Decision 1:", "Decision 2:", "Next-week check:"], "actual-test-founder-level-idea.md", failures)
+
+    saas = TEST_OUTPUT / "actual-test-saas-support.md"
+    if saas.exists():
+        require_contains(read(saas), ["MCP needed: yes", "Verification ladder", "Permission tier", "Observability", "maker-checker", "Orchestrator decision", "Real 实测 protocol"], "actual-test-saas-support.md", failures)
 
     check_negative_triggers(failures)
 

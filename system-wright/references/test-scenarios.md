@@ -44,6 +44,19 @@ Expected behavior:
 - It should propose a minimal first loop, such as weekly decision review or daily ops triage.
 - It should escalate to the organization routine level only if the user's problem is team-level coordination.
 
+### Scenario 4: SaaS Support Triage (MCP = yes)
+
+Input:
+"I run a small SaaS and manually triage support tickets from Postgres and Intercom every day: classify bug/question/billing, draft replies, escalate urgent ones. Design the actual system, not just a prompt."
+
+Expected behavior:
+
+- The skill should reach a loop + harness + MCP design, not a bare prompt — this is the positive "yes, build it" case.
+- MCP decision should be yes, with both connectors fully specified: Postgres as a read resource and Intercom as read plus a model-controlled draft-write tool (no send), each with primitive, control model, auth/data scope, read/write side effects, approval gate, and fallback.
+- It should place every action on a permission tier and keep customer-facing writes behind human approval; the minimal first version must not send to a customer.
+- It should split maker from checker, name the verification ladder, and include an observability log.
+- Orchestrator should stay not-yet for a one-person v1.
+
 ## Should Not Trigger
 
 These inputs should not activate the full workflow, or should produce a short fallback instead of a full system. They are negative examples for avoiding over-design.

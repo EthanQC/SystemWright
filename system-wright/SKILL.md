@@ -4,7 +4,7 @@ description: Turns a vague goal, messy repeated workflow, AI adoption problem, o
 license: MIT
 metadata:
   author: EthanQC
-  version: 1.0.0
+  version: 1.1.0
 ---
 
 # SystemWright
@@ -34,7 +34,7 @@ Use this skill when the user asks for:
 - applying Prompt, Context, Harness, and Loop to a real project
 - building a reusable way to work with an agent CLI or agentic IDE (Codex, Claude Code, Gemini CLI, Cursor, or compatible)
 
-If the user only needs a one-off answer, do not over-design. Offer a one-off prompt or checklist instead.
+If the user only needs a one-off answer, do not over-design. Deliver the concrete thing they asked for first (the summary, the speech, the checklist), then offer in one optional line to systematize it later. Do not produce a Work System Card, MCP decision, or Trial Run for a one-off request.
 
 ### 1. Layer 1: Idea Refinement
 
@@ -61,6 +61,8 @@ Question rules:
 - If the user asks for speed or testing, proceed with explicit assumptions.
 - Never make "idea clarity" a barrier to using AI. The skill should create clarity.
 
+Scope boundary: if the goal is mainly about emotions, mental or physical health, or personal relationships rather than a work output, name that plainly. Do not pretend a loop can fix a feeling. At most, after the user confirms, offer one narrow, optional slice of the work surface around it.
+
 Use `references/design-playbook.md` when the idea is broad, emotional, or underspecified.
 
 ### 2. Confirmation Gate
@@ -80,6 +82,8 @@ I will design for:
 
 If the user is present and the missing information changes risk, ask for confirmation.
 If the user asked for direct output or is unavailable, continue with assumptions and label them.
+
+Even when proceeding on assumptions, surface the single most load-bearing assumption — the one the whole design depends on — as an explicit question. Never silently default it.
 
 ### 3. Plain-Language Brief
 
@@ -111,16 +115,20 @@ Produce a "Work System Card" with these sections:
 - Outputs: what the system returns or changes
 - Prompt layer: role, task, constraints, output format, decision rules
 - Context layer: required facts, files, examples, memories, source-of-truth rules
-- Harness layer: tools, permissions, environment, guardrails, verification commands
-- Loop layer: repeat cycle, review cadence, feedback capture, memory, next-round improvement, and forbidden means (what the system must never do to satisfy the completion check, so it improves the real goal instead of gaming the metric)
-- Human judgment gates: what the human must decide
+- Harness layer: tools, permissions, environment, guardrails, verification commands (use the verification ladder — cheapest sufficient check first, deterministic before human; completion means checkable evidence, not the agent's say-so; put every action on a permission tier and keep real-world writes behind approval — see `references/four-layer-framework.md`)
+- Loop layer: repeat cycle, review cadence, feedback capture, memory, next-round improvement, and forbidden means (what the system must never do to satisfy the completion check, so it improves the real goal instead of gaming the metric); name which of the four loop types apply and set stop condition, escalation, budget, and observability (see `references/four-layer-framework.md` and `references/failure-modes.md`)
+- Human judgment gates: what the human must decide (self-check: does this design make the user surrender judgment they should keep — comprehension debt or cognitive surrender?)
 - MCP decision: needed or not, MCP primitive, control model, auth/data scope, read/write side effects, approval gate, fallback without MCP
 - Orchestrator decision: needed or not, orchestrator type, roles, stages, quality gates, fallback without orchestrator
 - Skill decision: whether the final workflow itself should become a reusable skill
 - Minimal first version
 - Expansion path
 
-Use `references/four-layer-framework.md` for definitions and fit rules.
+Match the output weight to the Decision level. For a `reusable prompt` or `context pack`, drop the MCP, Orchestrator, and Trial-Run sections and just return the prompt or context template — reserve the full Work System Card for harness, loop, MCP, or orchestrator-level work.
+
+Never let the minimal first version perform an external real-world write — send, publish, pay, delete, or modify production. Auto-send and auto-publish must start as draft-for-approval and only escalate after trust is established. Any MCP write primitive keeps its approval gate; it is not optional.
+
+Use `references/four-layer-framework.md` for definitions and fit rules, and `references/failure-modes.md` for the runtime failure modes to design against.
 
 ### 5. Design-Output Decision Rules
 
@@ -181,12 +189,18 @@ The output is acceptable only if:
 - It does not force MCP or orchestrator into the architecture unless the task needs them.
 - It makes Prompt, Context, Harness, and Loop visible as separate layers.
 - It asks for confirmation before risky automation or external actions.
+- It puts each action on a permission tier and never lets the minimal first version do an external real-world write without approval.
+- It names concrete verification as a ladder (cheapest sufficient check first), not a vague sentence.
+- It surfaces the single most load-bearing assumption instead of silently defaulting it.
+- If the goal is emotional, health-related, or relational rather than a work output, it says so instead of forcing a productivity loop.
 - It includes a trial-run path or performs a small trial run.
 - A non-technical user can understand the system in ordinary work terms.
 
 ## References
 
-- `references/four-layer-framework.md`: definitions and decision rules for Prompt, Context, Harness, Loop, MCP, Orchestrator, and Skill.
+- `references/four-layer-framework.md`: definitions and decision rules for Prompt, Context, Harness, Loop, MCP, Orchestrator, and Skill, plus the verification ladder, permission tiers, the four loop types, observability, and maker-checker.
+- `references/failure-modes.md`: the eight runtime failure modes (goal, context, tool, verification, loop-control, memory, human-collaboration, economic) and their fixes; read when designing the Loop and Harness layers.
 - `references/design-playbook.md`: detailed diagnostic questions, templates, and trial-run protocol.
+- `references/test-scenarios.md`: should-trigger and should-not-trigger examples and pass criteria; consult when routing a borderline request or checking for over-design.
 - `references/daily-use-protocol.md`: read when producing copyable prompts, plain-language handoffs, daily protocols, or record templates.
 - `references/research-notes.md`: audit/background only; read when reviewing the skill against the Agent Skills standard and other external specifications.
