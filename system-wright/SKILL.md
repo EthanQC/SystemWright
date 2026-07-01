@@ -41,6 +41,8 @@ Light path for a clearly-trivial one-off: when a named invocation routes to "one
 
 Artifact-and-system, not either-or: when the user wants a concrete deliverable (a page, a document, a dataset) and invokes this skill, produce both — a Work System Card for the reusable method (slim if the work is mostly one-off), then the artifact. Naming the skill signals they want the repeatable system, not only the output.
 
+Decision rule tying these three: a reusable method present → a full or slim Work System Card (the artifact-and-system path); no reusable method → the light path, which is the only case that omits the Work System Card and folds the Idea Diagnostic and Confirmation Gate into the three-line acknowledgement. Layer 1 routing stays visible either way.
+
 ### 1. Layer 1: Idea Refinement
 
 Produce an "Idea Diagnostic" before designing any system.
@@ -51,6 +53,7 @@ Core fields (always include):
 - Real job: what work the user is actually trying to get done.
 - Decision level: one-off answer, reusable prompt, context pack, harness, loop, MCP, orchestrator, or organization routine.
 - Missing decisions: only ask questions that change the system design.
+- Load-bearing assumption: name the single assumption the whole design depends on, and carry that same assumption into the Confirmation Gate as the one explicit question.
 
 Additional fields (include when known; otherwise infer briefly or defer — never block the user on them):
 
@@ -174,7 +177,7 @@ Before handing off, review the design with something other than the agent that w
 - On a host that supports subagents (Codex, Claude Code), spawn one independent checker subagent to score the Work System Card and Trial Run against the rubric in `references/verification-rubric.md`; it returns shippable or a fix list.
 - On a host without subagents, run the same rubric as an explicit self-check checklist before handoff.
 
-Never skip the gate; only downgrade its mechanism by host. A miss on routing, a missing Work System Card with visible Prompt / Context / Harness / Loop layers, or a v1 external real-world write blocks the handoff — fix it before continuing. If the skill was invoked by name, confirm Layer 1 was actually run rather than skipped.
+Never skip the gate; only downgrade its mechanism by host. A miss on routing, a missing Work System Card with visible Prompt / Context / Harness / Loop layers, or a v1 external real-world write blocks the handoff — fix it before continuing. On a light-path one-off there is no Work System Card or Trial Run to review, so the gate is satisfied by the visible routing acknowledgement plus the delivered artifact — nothing to block on there. If the skill was invoked by name, confirm Layer 1 was actually run rather than skipped.
 
 End with a practical handoff:
 
@@ -208,7 +211,7 @@ The output is acceptable only if:
 - It surfaces the single most load-bearing assumption instead of silently defaulting it.
 - If the goal is emotional, health-related, or relational rather than a work output, it says so instead of forcing a productivity loop.
 - If the skill was invoked by name, it ran Layer 1 (routing made visible) before task work, and produced a Work System Card alongside any requested artifact — unless routing found a clearly-trivial one-off with no reusable method, where the light path applies.
-- It passed the verification gate — an independent checker subagent, or the self-check fallback — before handoff.
+- It passed the verification gate — an independent checker subagent, or the self-check fallback — before handoff; on a light-path one-off, the routing acknowledgement plus the delivered artifact are the handoff and there is nothing for the gate to review.
 - It includes a trial-run path or performs a small trial run.
 - A non-technical user can understand the system in ordinary work terms.
 
