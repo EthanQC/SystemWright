@@ -4,7 +4,6 @@ description: Turns a vague goal, messy repeated workflow, AI adoption problem, o
 license: MIT
 metadata:
   author: EthanQC
-  version: 1.2.0
 ---
 
 # SystemWright
