@@ -1,7 +1,8 @@
 # Runtime Failure Modes
 
 These are the eight ways a designed work system fails *while it runs* — as opposed to the design-time
-mistakes in `design-playbook.md` (over-building, hidden context, no loop, fake automation). Read this
+mistakes in `design-playbook.md` (over-building, under-building, hidden context, no loop, fake
+automation, no human judgment). Read this
 when designing the Loop and Harness layers: for each mode, name the top symptoms the system will show
 and put the fix into the design so the loop improves the real goal instead of degrading silently.
 

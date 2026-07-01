@@ -13,7 +13,7 @@ Relevant takeaways:
 
 - A skill packages instructions, resources, and optional scripts so Codex can follow a task-specific workflow reliably.
 - Codex uses progressive disclosure: it first sees the skill name, description, and file path, then opens `SKILL.md` only when the skill is relevant.
-- A skill directory contains `SKILL.md` and optional `scripts/`, `references/`, `assets/`, and `agents/openai.yaml`.
+- A skill directory contains `SKILL.md` and optional `scripts/`, `references/`, `assets/`, and Codex display metadata in `openai.yaml` at the skill root (as this repo ships it).
 - Skills are suitable for reusable workflows and conventions, while plugins are a distribution unit when shipping broader bundles.
 
 Design implication:

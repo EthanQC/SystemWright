@@ -95,7 +95,14 @@ Use a code-review skill or direct review process, not this AI work-system design
 
 ## Pass Criteria
 
-The output passes if it contains:
+Match the pass criteria to how the request routed. SKILL.md's light path and its
+output-weight rule deliberately omit heavy sections, so applying the full-track
+checklist to a correctly-routed light-path or prompt-level design would wrongly
+fail it.
+
+### Full-track pass criteria (Scenarios 1–4)
+
+For harness / loop / MCP / orchestrator-level work, the output passes if it contains:
 
 - Idea Diagnostic
 - Confirmation assumptions or questions
@@ -113,9 +120,22 @@ The output passes if it contains:
 - Markdown Record Template
 - Observed capability and limitation
 
+### Light-path / prompt-level pass criteria
+
+For a named trivial one-off (SKILL.md light path), the output passes if it shows a
+visible routing decision (`routing: one-off, no reusable system here`), the
+requested artifact itself, and one optional line offering to build the full system
+later — and it omits the Work System Card and Trial Run (their absence is correct
+here, not a miss).
+
+For a `reusable prompt` or `context pack` (SKILL.md output-weight rule), the output
+passes if it returns the prompt or context template with its Prompt / Context layers
+visible and omits the MCP, Orchestrator, and Trial-Run sections.
+
 The output fails if it:
 
 - hides behind technical labels before explaining the workflow in plain language
 - forces MCP or orchestrator when the first version can run manually
+- forces a full Work System Card onto a clearly-trivial one-off, or a Trial Run onto a prompt-only design
 - passes a keyword-only test while leaving no concrete next action
 - lacks negative examples for should-not-trigger cases

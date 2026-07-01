@@ -167,8 +167,9 @@ Loop layer:
 - Budget / limits (max retries, cost/time ceiling):
 - Observability (run time, inputs, actions, failed step, retries, cost, final evidence):
 - Economic / cost (model tiering, caching, per-run cost):
-- Top runtime failure modes (2-3 from failure-modes.md, by name) + mitigation:
 - Forbidden means (what the system must never do to satisfy its own completion check):
+
+Top runtime failure modes (2-3 from failure-modes.md, by name) + mitigation:
 
 Human judgment gates:
 
