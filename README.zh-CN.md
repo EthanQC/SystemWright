@@ -67,6 +67,15 @@ sh scripts/install.sh --dir /path/to/skills
 sh scripts/install.sh --host claude --project   # 装到 ./.claude/skills
 ```
 
+### 作为 Claude Code 插件安装
+
+在 Claude Code 里也可以从自带的插件 marketplace 安装:
+
+```text
+/plugin marketplace add EthanQC/SystemWright
+/plugin install system-wright@system-wright
+```
+
 ### 各 host 对照
 
 | Host | 用户级 skills 目录 | 项目级 | 调用方式 |

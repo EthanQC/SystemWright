@@ -1,0 +1,9 @@
+{
+  "name": "system-wright",
+  "description": "Turns a vague goal into a reusable AI work system built from Prompt, Context, Harness, and Loop, with a plain-language brief, human-approval gates, and a small trial run.",
+  "author": {
+    "name": "EthanQC"
+  },
+  "homepage": "https://ethanqc.github.io/SystemWright/",
+  "license": "MIT"
+}

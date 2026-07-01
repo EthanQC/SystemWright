@@ -74,6 +74,15 @@ sh scripts/install.sh --dir /path/to/skills
 sh scripts/install.sh --host claude --project   # installs into ./.claude/skills
 ```
 
+### As a Claude Code plugin
+
+In Claude Code you can also install it from the bundled plugin marketplace:
+
+```text
+/plugin marketplace add EthanQC/SystemWright
+/plugin install system-wright@system-wright
+```
+
 ### Per-host reference
 
 | Host | User-level skills dir | Project-level | Invocation |

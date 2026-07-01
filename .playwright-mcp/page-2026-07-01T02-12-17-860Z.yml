@@ -1,0 +1,171 @@
+- generic [ref=e2]:
+  - complementary [ref=e3]:
+    - heading "「置身 X 内」大厂文化长文" [level=1] [ref=e4]
+    - generic [ref=e5]: 逐篇分析 · 综合解读 · v0.1（试运行）
+    - navigation [ref=e6]:
+      - generic [ref=e7]:
+        - generic [ref=e8]: 总览
+        - link "这是什么 / 研究方法" [ref=e9] [cursor=pointer]:
+          - /url: "#about"
+        - link "综合解读：五条横切主题" [ref=e10] [cursor=pointer]:
+          - /url: "#synthesis"
+      - generic [ref=e11]:
+        - generic [ref=e12]: A · 管控与监视型
+        - link "置身钉内 — 钉钉/阿里已分析" [ref=e13] [cursor=pointer]:
+          - /url: "#ding-nei"
+      - generic [ref=e14]:
+        - generic [ref=e15]: B · 效率异化 / 判断消失型
+        - link "置身团内 — 美团已分析" [ref=e16] [cursor=pointer]:
+          - /url: "#tuan-nei"
+      - generic [ref=e17]:
+        - generic [ref=e18]: C · 权力与接班型
+        - link "置身米内 — 小米待补" [ref=e19] [cursor=pointer]:
+          - /url: "#mi-nei"
+      - generic [ref=e20]:
+        - generic [ref=e21]: D · 待收集 / 待分析
+        - link "置身抖内 — 字节/抖音待补" [ref=e22] [cursor=pointer]:
+          - /url: "#dou-nei"
+        - link "置身钉外 — 钉钉旁观视角待补" [ref=e23] [cursor=pointer]:
+          - /url: "#ding-wai"
+      - generic [ref=e24]:
+        - generic [ref=e25]: 附录
+        - link "数据来源与真实性说明" [ref=e26] [cursor=pointer]:
+          - /url: "#sources"
+  - main [ref=e27]:
+    - generic [ref=e28]:
+      - heading "「置身 X 内」大厂文化长文 · 逐篇分析与综合解读" [level=1] [ref=e29]
+      - paragraph [ref=e30]: 2026 年互联网大厂涌现的一组仿写《置身事内》标题的内网/离职长文。本页把它们 逐篇按统一分析框架拆解，再横向综合，用可读性强的分目录方式呈现。
+      - generic [ref=e31]:
+        - text: 统一分析框架（每篇一致）：作者与身份 · 公司 · 篇幅 · 核心论点 · 关键证据 · 组织病理类型 · 代表性金句 · 影响/后续 · 局限与偏见。
+        - text: 本版状态：这是 SystemWright 的试运行产物——《置身钉内》《置身团内》为 真实抓取后分析（实测）；其余为 目录占位，待循环补齐。见页脚真实性说明。
+    - generic [ref=e32]:
+      - heading "总览 · 这是什么" [level=2] [ref=e33]
+      - article [ref=e34]:
+        - paragraph [ref=e35]: 「置身 X 内」是对经济学家兰小欢 2021 年著作《置身事内》标题的集体仿写。2026 年 6 月起， 钉钉一位 AI 旗舰项目前产品经理发出约 7.5 万字离职长文《置身钉内》引爆全网后， 美团、小米、字节等公司陆续出现同题材的内网/离职文，形成一个可辨识的文体类型： 大厂在职/前员工从内部视角，复盘组织如何在效率、管控、AI 化的名义下消耗个体。
+        - paragraph [ref=e36]: 因为这是一个还在生长的文体（新的「置身某内」会持续出现），本页不是一次性文章， 而是一条可重复运行的流水线：收集 → 逐篇分析 → 综合 → 生成本页。新文章出现时， 重跑一次即可增量更新。
+    - generic [ref=e37]:
+      - heading "综合解读" [level=2] [ref=e38]
+      - article [ref=e39]:
+        - heading "五条横切主题（跨篇）" [level=3] [ref=e40]
+        - paragraph [ref=e41]: 在已分析的篇目之间，反复出现的不是「哪家公司更坏」，而是几种共性组织机制：
+        - table [ref=e42]:
+          - rowgroup [ref=e43]:
+            - row "横切主题 在《置身钉内》里 在《置身团内》里" [ref=e44]:
+              - columnheader "横切主题" [ref=e45]
+              - columnheader "在《置身钉内》里" [ref=e46]
+              - columnheader "在《置身团内》里" [ref=e47]
+            - row "1. 监视 / 判断被抽走 自动已读、层级加权、巡查与公开检讨——不确定是否被看，比被看更折磨 「你不需要有自己的判断，只需要猜 +1 的意图」——判断权上收" [ref=e48]:
+              - cell "1. 监视 / 判断被抽走" [ref=e49]
+              - cell "自动已读、层级加权、巡查与公开检讨——不确定是否被看，比被看更折磨" [ref=e50]
+              - cell "「你不需要有自己的判断，只需要猜 +1 的意图」——判断权上收" [ref=e51]
+            - row "2. AI 沦为遮羞布 PPT 文化盖过真实产品结果 AI 沦为「许愿池」，贴标签而不重新定义组织问题" [ref=e52]:
+              - cell "2. AI 沦为遮羞布" [ref=e53]
+              - cell "PPT 文化盖过真实产品结果" [ref=e54]
+              - cell "AI 沦为「许愿池」，贴标签而不重新定义组织问题" [ref=e55]
+            - row "3. 数据富有、决策贫穷 信息在层级里被压制而非聚合 十几年交易数据未善用，靠「一块钱两碗冰粉」补贴硬撑" [ref=e56]:
+              - cell "3. 数据富有、决策贫穷" [ref=e57]
+              - cell "信息在层级里被压制而非聚合" [ref=e58]
+              - cell "十几年交易数据未善用，靠「一块钱两碗冰粉」补贴硬撑" [ref=e59]
+            - row "4. 有没有「特定恶人」 火力集中在可被人事响应的管理者风格与管控尺度 指向无特定恶人的组织惯性——旧系统在环境变了后仍自动复制自己" [ref=e60]:
+              - cell "4. 有没有「特定恶人」" [ref=e61]
+              - cell "火力集中在可被人事响应的管理者风格与管控尺度" [ref=e62]
+              - cell "指向无特定恶人的组织惯性——旧系统在环境变了后仍自动复制自己" [ref=e63]
+            - row "5. 个体消耗的底线 把对个体的消耗底线意识作为核心质问 把「像手工作坊而非科技公司」作为核心质问" [ref=e64]:
+              - cell "5. 个体消耗的底线" [ref=e65]
+              - cell "把对个体的消耗底线意识作为核心质问" [ref=e66]
+              - cell "把「像手工作坊而非科技公司」作为核心质问" [ref=e67]
+        - paragraph [ref=e68]: 注：横切主题会随新增篇目扩展（例如《置身米内》大概率补强「权力集中/接班」维度）。当前基于 2 篇实测。
+    - heading "A · 管控与监视型" [level=2] [ref=e69]
+    - article [ref=e71]:
+      - heading "《置身钉内》" [level=3] [ref=e72]
+      - generic [ref=e73]:
+        - generic [ref=e74]: 公司：钉钉 / 阿里巴巴
+        - generic [ref=e75]: 作者：AI 旗舰项目「ONE / 0 项目」核心产品经理
+        - generic [ref=e76]: 篇幅：约 7.5 万字
+        - generic [ref=e77]: 时间：2026-06 首发
+        - generic [ref=e78]: 状态：实测分析
+      - generic [ref=e79]:
+        - generic [ref=e80]: 核心论点
+        - text: 管理走向异化与去人性化：以「管控」为名，把对个体的消耗推到底线之外。
+      - generic [ref=e81]:
+        - generic [ref=e82]: 关键证据
+        - list [ref=e83]:
+          - listitem [ref=e84]: 自动已读：取消了员工的缓冲空间，消息一到即视为已读。
+          - listitem [ref=e85]: 层级加权算法：高管消息长期置顶，基层声音被系统性压制。
+          - listitem [ref=e86]: 「望舒行动」：要求员工监测竞对工时并对齐。
+          - listitem [ref=e87]: 「金色飞贼」：领导巡查，发现刷社媒者需公开写检讨。
+          - listitem [ref=e88]: PPT 文化：汇报观感盖过真实产品结果。
+      - generic [ref=e89]:
+        - generic [ref=e90]: 组织病理类型
+        - text: 福柯式「全景监狱」：核心不是「有人正在看你」，而是「你根本不知道是否正在被看」。
+      - blockquote [ref=e91]: 「最折磨人的不是『有人正在看你』，而是你根本不知道你是否正在被看。」
+      - generic [ref=e92]:
+        - generic [ref=e93]: 影响 / 后续
+        - text: 发文后不到七天，阿里合伙人委员会亲自下场批评，次日相关一把手（陈航/无招）火线卸任。
+      - generic [ref=e94]:
+        - generic [ref=e95]: 局限与偏见
+        - text: 单一离职者视角、情绪浓度高、以单个项目（ONE）经验外推整个组织；缺少管理层对话与反证。
+    - heading "B · 效率异化 / 判断消失型" [level=2] [ref=e96]
+    - article [ref=e98]:
+      - heading "《置身团内》" [level=3] [ref=e99]
+      - generic [ref=e100]:
+        - generic [ref=e101]: 公司：美团（到餐）
+        - generic [ref=e102]: 作者：匿名基层产品，短期在职「浪子型」
+        - generic [ref=e103]: 篇幅：约 2000+ 字（「mini 版」）
+        - generic [ref=e104]: 时间：2026-06，《置身钉内》后不到三周
+        - generic [ref=e105]: 状态：实测分析
+      - generic [ref=e106]:
+        - generic [ref=e107]: 核心论点
+        - text: 超级效率文化消灭了独立判断；AI 落地失败，因为根本问题从未被重新定义。
+      - generic [ref=e108]:
+        - generic [ref=e109]: 关键证据
+        - list [ref=e110]:
+          - listitem [ref=e111]: 管理者明示：「你不需要有自己的判断，你只需要猜 +1 的意图。」
+          - listitem [ref=e112]: 海量交易数据未被善用，靠「一块钱两碗冰粉」式补贴硬撑，而非数据驱动。
+          - listitem [ref=e113]: AI 功能沦为「许愿池」——什么都贴 AI 标签，却不重新定义组织问题。
+      - generic [ref=e114]:
+        - generic [ref=e115]: 组织病理类型
+        - text: 「无特定恶人」的组织惯性：质疑的不是谁坏，而是曾经最有效的那套系统，在环境变了之后是否仍在自动复制自己。
+      - blockquote [ref=e116]: 「不像一家十几年数据积累的科技公司，更像靠人肉、经验和临时协调的手工作坊。」
+      - generic [ref=e117]:
+        - generic [ref=e118]: 局限与偏见
+        - text: 在职时间短、篇幅小、证据密度低于《置身钉内》；旁观者/短工视角，缺乏纵深复盘。
+    - heading "C · 权力与接班型" [level=2] [ref=e119]
+    - article [ref=e121]:
+      - heading "《置身米内》待补" [level=3] [ref=e122]
+      - generic [ref=e123]:
+        - generic [ref=e124]: 公司：小米
+        - generic [ref=e125]: 作者：2024 届校招生（现已离职）
+        - generic [ref=e126]: 篇幅：约 4000 字
+        - generic [ref=e127]: 状态：目录占位
+      - paragraph [ref=e128]: 初步线索（来自搜索结果，尚未按框架逐字实测分析）：将雷军类比为集权化的「常胜将军项羽」； 触及高端化停滞与「校招变味」。下一轮循环将抓取原文并按统一框架补齐核心论点/证据/金句/局限。
+    - heading "D · 待收集 / 待分析" [level=2] [ref=e129]
+    - generic [ref=e130]:
+      - article [ref=e131]:
+        - heading "《置身抖内 / 置身德内》待补" [level=3] [ref=e132]
+        - generic [ref=e133]:
+          - generic [ref=e134]: 公司：字节 / 抖音
+          - generic [ref=e135]: 状态：待收集
+        - paragraph [ref=e136]: 已在检索中被多次提及，原文尚未定位与核验。下一轮循环补齐。
+      - article [ref=e137]:
+        - heading "《置身钉外》待补" [level=3] [ref=e138]
+        - generic [ref=e139]:
+          - generic [ref=e140]: 公司：钉钉（旁观/外部视角）
+          - generic [ref=e141]: 状态：待收集
+        - paragraph [ref=e142]: 《置身钉内》的姊妹篇，从「外部/旁观」视角。待抓取原文后按框架分析。
+    - generic [ref=e143]:
+      - paragraph [ref=e144]: 数据来源与真实性说明。本页由 SystemWright 试运行生成。
+      - list [ref=e145]:
+        - listitem [ref=e146]:
+          - text: 实测（已抓取并按框架分析）：《置身钉内》《置身团内》—— 材料来自
+          - code [ref=e147]: huxiu.com/article/4869552
+          - text: 等公开报道与知乎/搜狐转载的二手复盘。 注意：钉内 7.5 万字原文本身未逐字通读，分析基于权威二手复盘，可能遗漏原文细节。
+        - listitem [ref=e148]: 待补（仅检索线索、未逐字分析）：《置身米内》《置身抖内/德内》《置身钉外》。
+        - listitem [ref=e149]:
+          - text: 收集步骤的已知限制：部分聚合/存档站（如
+          - code [ref=e150]: 2aran.com
+          - text: ）对自动抓取返回
+          - code [ref=e151]: 403 Forbidden
+          - text: ；需回退到镜像转载、搜索摘要，或由用户粘贴原文。
+        - listitem [ref=e152]: 边界：凡涉及在世人物的负面指控（如把某创始人比作某历史人物）均标注为「文中说法」，非本页结论。
+      - paragraph [ref=e153]: 生成时间：试运行 v0.1 · 每次重跑循环后此处更新「已分析 / 待补」清单。
