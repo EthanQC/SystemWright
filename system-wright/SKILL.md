@@ -37,6 +37,8 @@ If the user only needs a one-off answer, do not over-design. Deliver the concret
 
 Named-invocation override: if the user invokes this skill by name (for example `$system-wright` or `/system-wright`), always run Layer 1 first — the Idea Diagnostic, an explicit routing decision (reusable system vs one-off artifact), and the Confirmation Gate — before doing task work, even inside a larger or messy multi-goal session, and even if the routing conclusion is "one-off." An explicit invocation is itself a request to systematize; the one-off off-ramp above must never swallow it, and this override takes priority over the output-weight rule in step 4.
 
+Light path for a clearly-trivial one-off: when a named invocation routes to "one-off" and the deliverable is a single short artifact with no reusable method worth capturing (a toast, a one-line note, a single email), replace the full ceremony with a three-line routing acknowledgement — name the real job, state "routing: one-off, no reusable system here," and ask the single most load-bearing question only if one truly exists — then deliver the artifact and offer in one optional line to build the full system later. Skip the four-layer Work System Card and the Trial Run; with no Work System Card there is nothing for the verification gate to review. Layer 1 still ran and the routing stays visible. Keep the full track whenever a reusable method exists — a repeatable collect-analyze-present pipeline is a system, a wedding toast is not.
+
 Artifact-and-system, not either-or: when the user wants a concrete deliverable (a page, a document, a dataset) and invokes this skill, produce both — a Work System Card for the reusable method (slim if the work is mostly one-off), then the artifact. Naming the skill signals they want the repeatable system, not only the output.
 
 ### 1. Layer 1: Idea Refinement
@@ -205,7 +207,7 @@ The output is acceptable only if:
 - It names concrete verification as a ladder (cheapest sufficient check first), not a vague sentence.
 - It surfaces the single most load-bearing assumption instead of silently defaulting it.
 - If the goal is emotional, health-related, or relational rather than a work output, it says so instead of forcing a productivity loop.
-- If the skill was invoked by name, it ran Layer 1 (Idea Diagnostic, routing, Confirmation) before task work, and produced a Work System Card even alongside any requested artifact.
+- If the skill was invoked by name, it ran Layer 1 (routing made visible) before task work, and produced a Work System Card alongside any requested artifact — unless routing found a clearly-trivial one-off with no reusable method, where the light path applies.
 - It passed the verification gate — an independent checker subagent, or the self-check fallback — before handoff.
 - It includes a trial-run path or performs a small trial run.
 - A non-technical user can understand the system in ordinary work terms.
