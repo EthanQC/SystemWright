@@ -92,6 +92,11 @@ def check_skill_entrypoint(failures: list[str]) -> None:
             "references/daily-use-protocol.md",
             "audit/background only",
             "forbidden means",  # the anti-Goodhart Loop field
+            # v1.2 discipline/trigger axis: named-invocation gate + maker-checker verification gate
+            "Named-invocation override",
+            "Verification Gate",
+            "references/verification-rubric.md",
+            "checker subagent",
         ],
         "SKILL.md",
         failures,
@@ -112,7 +117,8 @@ def check_references(failures: list[str]) -> None:
     require_contains(
         read(REFERENCES / "design-playbook.md"),
         ["Beginner Default Questions", "Plain-Language Brief Template", "MCP Primitive Decision Format", "Orchestrator Type Decision Format", "Forbidden means",
-         "Permission tier", "Verification ladder", "Stop condition:", "Observability", "Grounding artifacts"],
+         "Permission tier", "Verification ladder", "Stop condition:", "Observability", "Grounding artifacts",
+         "Top runtime failure modes", "Trial mode"],
         "design-playbook.md",
         failures,
     )
@@ -132,6 +138,14 @@ def check_references(failures: list[str]) -> None:
          "Loop-control failure", "Memory failure", "Human-collaboration failure", "Economic failure",
          "verification ladder", "comprehension debt", "cognitive surrender"],
         "failure-modes.md",
+        failures,
+    )
+
+    require_contains(
+        read(REFERENCES / "verification-rubric.md"),
+        ["Verification Rubric", "checker subagent", "self-check", "SHIPPABLE", "maker-checker",
+         "does not support subagents", "load-bearing assumption"],
+        "verification-rubric.md",
         failures,
     )
 

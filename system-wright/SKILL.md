@@ -4,7 +4,7 @@ description: Turns a vague goal, messy repeated workflow, AI adoption problem, o
 license: MIT
 metadata:
   author: EthanQC
-  version: 1.1.0
+  version: 1.2.0
 ---
 
 # SystemWright
@@ -35,6 +35,10 @@ Use this skill when the user asks for:
 - building a reusable way to work with an agent CLI or agentic IDE (Codex, Claude Code, Gemini CLI, Cursor, or compatible)
 
 If the user only needs a one-off answer, do not over-design. Deliver the concrete thing they asked for first (the summary, the speech, the checklist), then offer in one optional line to systematize it later. Do not produce a Work System Card, MCP decision, or Trial Run for a one-off request.
+
+Named-invocation override: if the user invokes this skill by name (for example `$system-wright` or `/system-wright`), always run Layer 1 first — the Idea Diagnostic, an explicit routing decision (reusable system vs one-off artifact), and the Confirmation Gate — before doing task work, even inside a larger or messy multi-goal session, and even if the routing conclusion is "one-off." An explicit invocation is itself a request to systematize; the one-off off-ramp above must never swallow it, and this override takes priority over the output-weight rule in step 4.
+
+Artifact-and-system, not either-or: when the user wants a concrete deliverable (a page, a document, a dataset) and invokes this skill, produce both — a Work System Card for the reusable method (slim if the work is mostly one-off), then the artifact. Naming the skill signals they want the repeatable system, not only the output.
 
 ### 1. Layer 1: Idea Refinement
 
@@ -117,6 +121,7 @@ Produce a "Work System Card" with these sections:
 - Context layer: required facts, files, examples, memories, source-of-truth rules
 - Harness layer: tools, permissions, environment, guardrails, verification commands (use the verification ladder — cheapest sufficient check first, deterministic before human; completion means checkable evidence, not the agent's say-so; put every action on a permission tier and keep real-world writes behind approval — see `references/four-layer-framework.md`)
 - Loop layer: repeat cycle, review cadence, feedback capture, memory, next-round improvement, and forbidden means (what the system must never do to satisfy the completion check, so it improves the real goal instead of gaming the metric); name which of the four loop types apply and set stop condition, escalation, budget, and observability (see `references/four-layer-framework.md` and `references/failure-modes.md`)
+- Top runtime failure modes: the 2-3 most likely for this system, named from `references/failure-modes.md`, each with a mitigation
 - Human judgment gates: what the human must decide (self-check: does this design make the user surrender judgment they should keep — comprehension debt or cognitive surrender?)
 - MCP decision: needed or not, MCP primitive, control model, auth/data scope, read/write side effects, approval gate, fallback without MCP
 - Orchestrator decision: needed or not, orchestrator type, roles, stages, quality gates, fallback without orchestrator
@@ -150,6 +155,7 @@ After designing the system, run one small real example whenever possible.
 
 Record:
 
+- Trial mode: real 实测 / partial / design-consistency dry-run
 - Test input
 - Assumptions
 - First output
@@ -160,7 +166,14 @@ Record:
 
 The trial run must test whether the system clarifies the goal and produces a usable next action, not merely whether the text sounds good.
 
-### 7. Final Handoff
+### 7. Verification Gate and Final Handoff
+
+Before handing off, review the design with something other than the agent that wrote it (maker-checker):
+
+- On a host that supports subagents (Codex, Claude Code), spawn one independent checker subagent to score the Work System Card and Trial Run against the rubric in `references/verification-rubric.md`; it returns shippable or a fix list.
+- On a host without subagents, run the same rubric as an explicit self-check checklist before handoff.
+
+Never skip the gate; only downgrade its mechanism by host. A miss on routing, a missing Work System Card with visible Prompt / Context / Harness / Loop layers, or a v1 external real-world write blocks the handoff — fix it before continuing. If the skill was invoked by name, confirm Layer 1 was actually run rather than skipped.
 
 End with a practical handoff:
 
@@ -193,6 +206,8 @@ The output is acceptable only if:
 - It names concrete verification as a ladder (cheapest sufficient check first), not a vague sentence.
 - It surfaces the single most load-bearing assumption instead of silently defaulting it.
 - If the goal is emotional, health-related, or relational rather than a work output, it says so instead of forcing a productivity loop.
+- If the skill was invoked by name, it ran Layer 1 (Idea Diagnostic, routing, Confirmation) before task work, and produced a Work System Card even alongside any requested artifact.
+- It passed the verification gate — an independent checker subagent, or the self-check fallback — before handoff.
 - It includes a trial-run path or performs a small trial run.
 - A non-technical user can understand the system in ordinary work terms.
 
@@ -200,6 +215,7 @@ The output is acceptable only if:
 
 - `references/four-layer-framework.md`: definitions and decision rules for Prompt, Context, Harness, Loop, MCP, Orchestrator, and Skill, plus the verification ladder, permission tiers, the four loop types, observability, and maker-checker.
 - `references/failure-modes.md`: the eight runtime failure modes (goal, context, tool, verification, loop-control, memory, human-collaboration, economic) and their fixes; read when designing the Loop and Harness layers.
+- `references/verification-rubric.md`: the maker-checker verification gate — the review rubric, the checker-subagent prompt, and the self-check fallback for hosts without subagents; use before the Final Handoff.
 - `references/design-playbook.md`: detailed diagnostic questions, templates, and trial-run protocol.
 - `references/test-scenarios.md`: should-trigger and should-not-trigger examples and pass criteria; consult when routing a borderline request or checking for over-design.
 - `references/daily-use-protocol.md`: read when producing copyable prompts, plain-language handoffs, daily protocols, or record templates.
