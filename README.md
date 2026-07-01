@@ -32,8 +32,6 @@ It returns (a runnable loop, not a platform):
 
 The skill itself is the product. MCPs, orchestrators, loops, prompts, and context packs are possible *outputs* it may design after diagnosing the real need — never prerequisites.
 
-<!-- TODO(demo): record a 30–60s asciinema/GIF of a real run and embed it here. -->
-
 ## What it does
 
 A two-layer process:
@@ -42,6 +40,18 @@ A two-layer process:
 2. **Work-system design** — convert the target into Prompt, Context, Harness, Loop, and human-judgment rules.
 
 Expected output: Plain-Language Brief → Work System Card (Prompt / Context / Harness / Loop) → MCP & orchestrator decisions as *outputs* → Daily-Use Protocol → Copyable Starting Prompt → Markdown Record Template → Trial Run → Review Rule.
+
+## Why a work system, not a stronger prompt
+
+| Layer | What you think you're learning | What actually matters |
+|---|---|---|
+| Prompt | How to ask the AI | How to express intent clearly |
+| Context | Giving the AI more information | How to select, organize, and refresh the background |
+| Harness | Giving the AI tools | How to design permissions, rules, verification, and guardrails |
+| Loop | Letting the AI run on its own | How to design a system that is sustainable, checkable, stoppable, and improvable |
+
+Low-leverage use: ask once, get one answer.
+High-leverage use: design a work system where the AI keeps advancing a class of tasks — with a check, feedback, and memory each round — while you still make the value calls.
 
 ## Repository structure
 
@@ -54,9 +64,10 @@ scripts/
   install.sh              # cross-platform installer
   validate_skill.py       # self-contained, dependency-free validator
   test_validate_skill.py  # validator unit tests
+  check_packaging.py      # manifest + landing-page validation
 tests/
   check_skill_quality.py  # completeness lint
-test-output/              # real recorded runs + negative-trigger tests
+test-output/              # recorded design walkthroughs + negative-trigger tests
 LICENSE
 ```
 
@@ -145,6 +156,7 @@ All checks are dependency-free (no PyYAML, no network) and run on any clone:
 python3 quick_validate.py                 # structural validation (self-contained)
 python3 scripts/test_validate_skill.py    # validator unit tests
 python3 tests/check_skill_quality.py      # completeness lint
+python3 scripts/check_packaging.py        # manifest + landing-page validation
 python3 -m py_compile scripts/*.py tests/check_skill_quality.py quick_validate.py && git diff --check
 ```
 
@@ -152,10 +164,17 @@ CI (`.github/workflows/ci.yml`) runs these on a clean checkout across Python 3.9
 
 ## Test Outputs
 
+These are recorded **design walkthroughs** — self-authored, design-consistency runs that show the skill's end-to-end shape. They are not yet replays over real production data (real-data runs will replace them).
+
 - `test-output/actual-test-messy-ai-article-loop.md`: a messy, non-technical input becoming a usable reading/work loop.
 - `test-output/actual-test-xhs-ops-system.md`: the XHS ops use case, including MCP/orchestrator boundaries.
 - `test-output/actual-test-founder-level-idea.md`: a founder-level vague goal becoming a weekly decision loop.
+- `test-output/actual-test-saas-support.md`: a SaaS support workflow reaching a triage/response loop with MCP=yes and maker-checker.
 - `test-output/negative-trigger-tests.md`: simple rewrites, pure definitions, temporary checklists, and ordinary code review do **not** trigger this skill.
+
+## Contributing
+
+Issues and PRs welcome — see [CONTRIBUTING.md](CONTRIBUTING.md) for the validator commands to run first and [SECURITY.md](SECURITY.md) to report a concern privately. SystemWright is **unversioned by design**: there is no version field, and releases are pinned by git commit on `main` rather than a version number.
 
 ## License
 
