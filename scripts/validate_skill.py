@@ -104,17 +104,20 @@ def _check_description(desc: str) -> str | None:
 
 
 def _check_allowed_tools(value: str) -> str | None:
-    """`allowed-tools` is optional, but if present it must be a non-empty,
-    comma/space-separated list of tool-name-shaped tokens — not empty and not
-    arbitrary text. Absent key is fine (validated only when supplied)."""
+    """`allowed-tools` is optional, but if present it must be non-empty and free
+    of angle brackets (the same garbage signal `_check_description` catches).
+
+    We deliberately do NOT tokenize tool-name shape: entries may be bare names
+    (`Read`), namespaced MCP tools (`mcp__srv__tool`), or Claude Code permission
+    specifiers whose argument holds arbitrary text — `Bash(git:*)`,
+    `WebFetch(domain:example.com)` — so a strict token regex would reject valid
+    skills. Absent key is fine (validated only when supplied)."""
     if value is None:
         return None
-    tokens = [t for t in re.split(r"[,\s]+", value.strip()) if t]
-    if not tokens:
+    if not value.strip():
         return "'allowed-tools' is present but empty; omit the key or list at least one tool"
-    for tok in tokens:
-        if not re.fullmatch(r"[\w./:-]+", tok):
-            return f"'allowed-tools' has a malformed tool name: {tok!r}"
+    if "<" in value or ">" in value:
+        return "'allowed-tools' must not contain angle brackets ('<' or '>')"
     return None
 
 

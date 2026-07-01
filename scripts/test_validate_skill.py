@@ -160,9 +160,12 @@ def main() -> int:
         (s / "references" / "sub" / "deep.md").write_text("# deep\n", encoding="utf-8")
         expect("references subdirectory rejected", validate_skill(s)[0], False)
 
-        # 22. allowed-tools: a well-formed token list passes; garbage/empty is rejected.
+        # 22. allowed-tools: a well-formed list passes; garbage/empty is rejected.
         s = make_skill(tmp / "tools-ok", "name: a-skill\ndescription: x\nallowed-tools: Read, Write, Bash")
         expect("valid allowed-tools accepted", validate_skill(s)[0], True)
+        # Permission specifiers (Bash(git:*)) and namespaced MCP tools must pass.
+        s = make_skill(tmp / "tools-spec", "name: a-skill\ndescription: x\nallowed-tools: Bash(git:*), Read, mcp__srv__tool")
+        expect("permission-specifier allowed-tools accepted", validate_skill(s)[0], True)
         s = make_skill(tmp / "tools-bad", "name: a-skill\ndescription: x\nallowed-tools: <<>>garbage")
         expect("malformed allowed-tools rejected", validate_skill(s)[0], False)
         s = make_skill(tmp / "tools-empty", "name: a-skill\ndescription: x\nallowed-tools:")

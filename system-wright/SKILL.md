@@ -41,7 +41,7 @@ Light path for a clearly-trivial one-off: when a named invocation routes to "one
 
 Artifact-and-system, not either-or: when the user wants a concrete deliverable (a page, a document, a dataset) and invokes this skill, produce both — a Work System Card for the reusable method (slim if the work is mostly one-off), then the artifact. Naming the skill signals they want the repeatable system, not only the output.
 
-Decision rule tying these three: a reusable method present → a full or slim Work System Card (the artifact-and-system path); no reusable method → the light path, which is the only case that omits the Work System Card and folds the Idea Diagnostic and Confirmation Gate into the three-line acknowledgement. Layer 1 routing stays visible either way.
+Decision rule tying these three: a reusable method present → a full or slim Work System Card (the artifact-and-system path); no reusable method → the light path, which is the only named-invocation case that omits the Work System Card and folds the Idea Diagnostic and Confirmation Gate into the three-line acknowledgement. Layer 1 routing stays visible either way.
 
 ### 1. Layer 1: Idea Refinement
 
