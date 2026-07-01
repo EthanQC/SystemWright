@@ -13,15 +13,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT / "scripts"))
-from validate_skill import validate_skill  # noqa: E402
-
-
-def find_skill_dir(root: Path) -> Path:
-    candidates = [p for p in sorted(root.iterdir()) if (p / "SKILL.md").is_file()]
-    if len(candidates) != 1:
-        names = [p.name for p in candidates]
-        raise SystemExit(f"expected exactly one skill directory with SKILL.md, found: {names}")
-    return candidates[0]
+from validate_skill import find_skill_dir, validate_skill  # noqa: E402
 
 
 def main() -> int:

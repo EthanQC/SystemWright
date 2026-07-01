@@ -42,15 +42,38 @@ def _split_frontmatter(text: str) -> tuple[str, str] | None:
 
 
 def _parse_frontmatter(block: str) -> dict[str, str]:
-    """Parse a flat 'key: value' mapping. Nested blocks (e.g. metadata:)
-    contribute only their top-level key; indented children are ignored."""
+    """Parse a flat 'key: value' mapping.
+
+    A key whose value is a block-scalar indicator ('>' folded or '|' literal,
+    with optional chomp/indent modifiers) absorbs the following more-indented
+    lines as its value — so a standards-legal multi-line description is read in
+    full rather than truncated to the '>' marker. A mapping key with an empty
+    value (e.g. `metadata:`) still contributes only its top-level key; its
+    indented children are ignored."""
     out: dict[str, str] = {}
-    for line in block.splitlines():
+    lines = block.splitlines()
+    i = 0
+    while i < len(lines):
+        line = lines[i]
         if not line.strip() or line.startswith((" ", "\t", "#")):
+            i += 1
             continue
         m = re.match(r"([A-Za-z][\w-]*):\s?(.*)$", line)
-        if m:
-            out[m.group(1)] = m.group(2).strip().strip('"').strip("'")
+        if not m:
+            i += 1
+            continue
+        key, raw = m.group(1), m.group(2).strip()
+        if re.fullmatch(r"[>|][+-]?\d*", raw):  # block scalar: fold indented continuation
+            folded = raw[0] == ">"
+            i += 1
+            parts: list[str] = []
+            while i < len(lines) and (not lines[i].strip() or lines[i].startswith((" ", "\t"))):
+                parts.append(lines[i].strip())
+                i += 1
+            out[key] = (" " if folded else "\n").join(p for p in parts if p)
+            continue
+        out[key] = raw.strip('"').strip("'")
+        i += 1
     return out
 
 
@@ -80,6 +103,21 @@ def _check_description(desc: str) -> str | None:
     return None
 
 
+def _check_allowed_tools(value: str) -> str | None:
+    """`allowed-tools` is optional, but if present it must be a non-empty,
+    comma/space-separated list of tool-name-shaped tokens — not empty and not
+    arbitrary text. Absent key is fine (validated only when supplied)."""
+    if value is None:
+        return None
+    tokens = [t for t in re.split(r"[,\s]+", value.strip()) if t]
+    if not tokens:
+        return "'allowed-tools' is present but empty; omit the key or list at least one tool"
+    for tok in tokens:
+        if not re.fullmatch(r"[\w./:-]+", tok):
+            return f"'allowed-tools' has a malformed tool name: {tok!r}"
+    return None
+
+
 def _check_references(skill_dir: Path, skill_md_text: str) -> str | None:
     refs = skill_dir / "references"
     if refs.is_dir():
@@ -87,16 +125,22 @@ def _check_references(skill_dir: Path, skill_md_text: str) -> str | None:
         for child in refs.iterdir():
             if child.is_dir():
                 return f"references/ must be one level deep; found subdir {child.name!r}"
-        # No reference file may link to another reference file (no chaining).
+        # No reference file may link to another reference file (no chaining),
+        # and every relative link inside a reference must resolve on disk.
         ref_names = {p.name for p in refs.glob("*.md")}
         for ref in refs.glob("*.md"):
             for target in re.findall(r"\]\(([^)]+)\)", ref.read_text(encoding="utf-8")):
+                if target.startswith(("http://", "https://", "#", "mailto:")):
+                    continue
                 base = target.split("/")[-1].split("#")[0]
                 if base in ref_names and base != ref.name:
                     return (
                         f"references/{ref.name} links to another reference "
                         f"({base}); keep references one level deep from SKILL.md"
                     )
+                rel = target.split("#")[0].strip()
+                if rel and not (ref.parent / rel).exists():
+                    return f"references/{ref.name} links to a missing path: {rel}"
     # Every relative link in SKILL.md must resolve on disk.
     for target in re.findall(r"\]\(([^)]+)\)", skill_md_text):
         if target.startswith(("http://", "https://", "#", "mailto:")):
@@ -129,6 +173,7 @@ def validate_skill(skill_dir: Path) -> tuple[bool, str]:
     for check, value in (
         (_check_name, fields.get("name", "")),
         (_check_description, fields.get("description", "")),
+        (_check_allowed_tools, fields.get("allowed-tools")),
     ):
         err = check(value)
         if err:
@@ -142,6 +187,21 @@ def validate_skill(skill_dir: Path) -> tuple[bool, str]:
         return False, err
 
     return True, f"Skill '{fields['name']}' is valid!"
+
+
+def find_skill_dir(root: Path) -> Path:
+    """Return the single child of `root` that contains a SKILL.md.
+
+    Shared by quick_validate.py and the quality lint so the skill-directory
+    auto-detection rule lives in exactly one place. Raises SystemExit if the
+    count is not exactly one, so a mis-shaped repo fails loudly.
+    """
+    root = Path(root)
+    candidates = [p for p in sorted(root.iterdir()) if (p / "SKILL.md").is_file()]
+    if len(candidates) != 1:
+        names = [p.name for p in candidates]
+        raise SystemExit(f"expected exactly one skill directory with SKILL.md, found: {names}")
+    return candidates[0]
 
 
 def read_frontmatter(skill_dir: Path) -> dict[str, str]:

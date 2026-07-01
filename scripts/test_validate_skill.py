@@ -12,7 +12,12 @@ import tempfile
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from validate_skill import validate_skill  # noqa: E402
+from validate_skill import (  # noqa: E402
+    find_skill_dir,
+    read_frontmatter,
+    validate_skill,
+)
+from validate_skill import main as cli_main  # noqa: E402
 
 
 PASSES: list[str] = []
@@ -123,6 +128,63 @@ def main() -> int:
         )
         (s / "references").mkdir()
         expect("dangling reference link rejected", validate_skill(s)[0], False)
+
+        # 18. Folded (block-scalar) description is accepted and length-checked.
+        s = make_skill(
+            tmp / "folded",
+            "name: a-skill\ndescription: >\n"
+            "  This is a folded description that spans two lines.\n"
+            "  Use when testing block-scalar frontmatter parsing.",
+        )
+        expect("folded description accepted", validate_skill(s)[0], True)
+        assert read_frontmatter(s)["description"].startswith("This is a folded"), "fold join"
+        assert "\n" not in read_frontmatter(s)["description"], "folded value is single-lined"
+
+        # 19. Oversized folded description is rejected (length measured on joined value).
+        s = make_skill(
+            tmp / "folded-long",
+            "name: a-skill\ndescription: >\n  " + ("word " * 300),
+        )
+        expect("oversized folded description rejected", validate_skill(s)[0], False)
+
+        # 20. A relative link inside a reference that points nowhere is rejected.
+        s = make_skill(tmp / "refdangle", "name: a-skill\ndescription: x", body="# Title\n")
+        refs = s / "references"
+        refs.mkdir()
+        (refs / "a.md").write_text("See [gone](missing-asset.md).\n", encoding="utf-8")
+        expect("reference-internal dangling link rejected", validate_skill(s)[0], False)
+
+        # 21. A subdirectory under references/ is rejected (one level deep).
+        s = make_skill(tmp / "refsub", "name: a-skill\ndescription: x", body="# Title\n")
+        (s / "references" / "sub").mkdir(parents=True)
+        (s / "references" / "sub" / "deep.md").write_text("# deep\n", encoding="utf-8")
+        expect("references subdirectory rejected", validate_skill(s)[0], False)
+
+        # 22. allowed-tools: a well-formed token list passes; garbage/empty is rejected.
+        s = make_skill(tmp / "tools-ok", "name: a-skill\ndescription: x\nallowed-tools: Read, Write, Bash")
+        expect("valid allowed-tools accepted", validate_skill(s)[0], True)
+        s = make_skill(tmp / "tools-bad", "name: a-skill\ndescription: x\nallowed-tools: <<>>garbage")
+        expect("malformed allowed-tools rejected", validate_skill(s)[0], False)
+        s = make_skill(tmp / "tools-empty", "name: a-skill\ndescription: x\nallowed-tools:")
+        expect("empty allowed-tools rejected", validate_skill(s)[0], False)
+
+        # 23. read_frontmatter returns {} when SKILL.md is absent.
+        expect("read_frontmatter empty on missing SKILL.md", read_frontmatter(tmp / "empty") == {}, True)
+
+        # 24. find_skill_dir locates the single skill dir under a root.
+        root = tmp / "root"
+        (root / "the-skill").mkdir(parents=True)
+        (root / "the-skill" / "SKILL.md").write_text(
+            "---\nname: a-skill\ndescription: x\n---\n\n# T\n", encoding="utf-8"
+        )
+        expect("find_skill_dir finds the skill", find_skill_dir(root).name == "the-skill", True)
+
+        # 25. CLI main() exit codes: valid -> 0, invalid -> 1, wrong argc -> 2.
+        good = make_skill(tmp / "cli-ok", "name: a-skill\ndescription: Does a thing. Use when testing.")
+        bad = make_skill(tmp / "cli-bad", "name: BadName\ndescription: x")
+        expect("main() returns 0 for valid", cli_main(["prog", str(good)]) == 0, True)
+        expect("main() returns 1 for invalid", cli_main(["prog", str(bad)]) == 1, True)
+        expect("main() returns 2 for wrong argc", cli_main(["prog"]) == 2, True)
 
     print(f"PASS {len(PASSES)} / {len(PASSES) + len(FAILS)}")
     if FAILS:
