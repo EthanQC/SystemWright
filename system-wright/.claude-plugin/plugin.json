@@ -1,9 +1,18 @@
 {
   "name": "system-wright",
-  "description": "Turns a vague goal into a reusable AI work system built from Prompt, Context, Harness, and Loop, with a plain-language brief, human-approval gates, and a small trial run.",
+  "description": "Turns a vague goal into a reusable AI work system built from Prompt, Context, Harness, and Loop, with a plain-language brief, human-approval gates, and a small trial run. Use when productizing a recurring way of working with an agent; not for one-off rewrites, definitions, or ordinary code review.",
   "author": {
     "name": "EthanQC"
   },
   "homepage": "https://ethanqc.github.io/SystemWright/",
-  "license": "MIT"
+  "license": "MIT",
+  "keywords": [
+    "agent-skills",
+    "loop-engineering",
+    "claude-code",
+    "codex",
+    "gemini",
+    "cursor",
+    "workflow"
+  ]
 }

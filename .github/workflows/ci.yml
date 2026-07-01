@@ -25,11 +25,28 @@ jobs:
         run: python3 scripts/validate_skill.py system-wright && python3 scripts/test_validate_skill.py
       - name: Skill quality / completeness lint
         run: python3 tests/check_skill_quality.py
+      - name: Packaging + landing-page validation
+        run: python3 scripts/check_packaging.py
       - name: Byte-compile + whitespace
         run: |
-          python3 -m py_compile scripts/validate_skill.py scripts/test_validate_skill.py tests/check_skill_quality.py quick_validate.py
+          python3 -m py_compile scripts/validate_skill.py scripts/test_validate_skill.py scripts/check_packaging.py tests/check_skill_quality.py quick_validate.py
           git diff --check
       - name: Installer smoke test (custom dir, no host writes)
         run: |
           sh scripts/install.sh --dir "$RUNNER_TEMP/skills"
           test -f "$RUNNER_TEMP/skills/system-wright/SKILL.md"
+      - name: Installer per-host paths (temp HOME, no real host writes)
+        run: |
+          set -eu
+          FAKE_HOME="$RUNNER_TEMP/home"; mkdir -p "$FAKE_HOME"
+          for h in claude codex gemini cursor; do
+            HOME="$FAKE_HOME" CODEX_HOME= sh scripts/install.sh --host "$h" >/dev/null
+          done
+          test -f "$FAKE_HOME/.claude/skills/system-wright/SKILL.md"
+          test -f "$FAKE_HOME/.codex/skills/system-wright/SKILL.md"
+          test -f "$FAKE_HOME/.gemini/skills/system-wright/SKILL.md"
+          test -f "$FAKE_HOME/.cursor/skills/system-wright/SKILL.md"
+          # project-level install resolves under the current working dir
+          PROJ="$RUNNER_TEMP/proj"; mkdir -p "$PROJ"
+          ( cd "$PROJ" && sh "$GITHUB_WORKSPACE/scripts/install.sh" --host claude --project >/dev/null )
+          test -f "$PROJ/.claude/skills/system-wright/SKILL.md"
