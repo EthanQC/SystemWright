@@ -10,3 +10,6 @@ Thumbs.db
 __pycache__/
 *.py[cod]
 .venv/
+
+# Playwright MCP browser artifacts (stray logs/snapshots)
+.playwright-mcp/
